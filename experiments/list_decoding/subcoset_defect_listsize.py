@@ -98,14 +98,14 @@ def main():
     band = "IN BAND (Johnson,1-rho)" if johnson < delta < cap_proxy else \
            ("ABOVE capacity (delta>1-rho)" if delta >= cap_proxy else "BELOW Johnson")
     print(f"#   placement: {band}")
-    # prize check: list vs 2^-128 * q  (list is n/d, a CONSTANT in n)
+    # field-size check: list vs 2^-128 * q  (list is n/d, a CONSTANT in n)
     print(f"#   list size n/d = {ncoset}  <= 1/rho-ish.  2^-128*q would need q >= {ncoset}*2^128 "
-          f"~ 2^{128 + math.log2(ncoset):.1f}  => NOT prize-breaking for cryptographic q")
+          f"~ 2^{128 + math.log2(ncoset):.1f}  => does not break the field-size condition for cryptographic q")
 
     # ---- STEP 4: worst-case list cross-check (sample mode = LOWER bound over structured w) ----
     # The n/d constants are ONE explicit sub-family (a lower bound on the list for w=x^d). The true
     # worst-case list at this agreement is generally a somewhat larger CONSTANT; the only thing that
-    # would matter for the prize is Omega(q) growth, which neither the construction nor the oracle shows.
+    # would matter for the field-size condition is Omega(q) growth, which neither the construction nor the oracle shows.
     if args.check_list:
         size, _w, _lst = LO.list_size_at_agreement(q, L, k, a, mode="sample")
         verdict = "constant (mild)" if size < q else "GROWS with q -- investigate"

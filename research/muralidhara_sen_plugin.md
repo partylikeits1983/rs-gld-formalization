@@ -2,7 +2,7 @@
 
 **Fork A, positive but modest.** The first concrete positive in-repo target since GLD-9: import the
 Muralidhara–Sen above-Johnson list bound and compose it with the proven GLD-9 reduction to certify the
-interleaved prize at radius `E = n − √(nk) + c`.
+interleaved Grand List Decoding target at radius `E = n − √(nk) + c`.
 
 ## The two layers
 
@@ -18,7 +18,7 @@ gld_field_size_slightly_above_johnson_of_MS :
   (hED    : E < Dmin) (hD : Dmin ≤ minDist C · n)         -- E < min distance
   (hb     : E ≤ b·(Dmin−E)) (hr2 : Dmin ≤ 2^r·(Dmin−E))   -- GLD-9 integer budget
   (hField : 2^128 · choose(b+r,r) · (n^Dexp)^r ≤ |F|)     -- field-size condition
-  ⟹  2^128 · maxListSize (interleave C m) (E/n) ≤ |F|     -- the prize at E/n
+  ⟹  2^128 · maxListSize (interleave C m) (E/n) ≤ |F|     -- the Grand List Decoding target at E/n
 ```
 
 **Layer 2 — the Muralidhara–Sen proof itself (NOT yet formalized; decide after Layer 1).** Their
@@ -32,7 +32,7 @@ evaluation points (hence smooth cosets):
   where the list is `O(n²)` for all RS (the Guruswami–Sudan / Johnson range);
 - the iterated union gives `B_C(E) ≤ O(n^{Dexp})`, `Dexp = 2√α/(1−√α)²+3`.
 
-## Prize consequence (the careful scope)
+## Field-size consequence (the careful scope)
 
 `δ*_C ≥ 1 − √ρ + c/n` for any constant `c`, **provided `|F| ≥ 2^128 · poly(n)`** (`b ≈ ⌈1/√ρ⌉`,
 `r ≈ ⌈log₂(1/√ρ+1)⌉` constants; `poly(n) = choose(b+r,r)·(n^Dexp)^r`). The radius is strictly above
@@ -52,5 +52,5 @@ Johnson by the **additive** `c` only — a **relative `c/n` improvement, not con
    hypothesis discharged by the citation; Layer 1 is the in-repo content. **Layer 2 remains an
    available, lower-priority target** if an unconditional above-Johnson certificate is later wanted —
    the reduction starting point is recorded above.
-3. The full prize (constant-relative beyond Johnson, up to capacity) stays the external open target
+3. The full Grand List Decoding problem (constant-relative beyond Johnson, up to capacity) stays the external open target
    (`research/next_theorem.md`, `research/theorem_matching_for_base_rs.md`).

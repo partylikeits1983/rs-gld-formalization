@@ -1,7 +1,7 @@
 import Mathlib
 import RSGLD.ListDecoding.InterleavedListSize
 import RSGLD.ListDecoding.Interleaved
-import RSGLD.ListDecoding.Prize
+import RSGLD.ListDecoding.GrandListDecoding
 
 /-!
 # The interleaved challenge reduces to the base-RS list size

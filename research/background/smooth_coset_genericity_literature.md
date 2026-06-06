@@ -56,7 +56,7 @@ Schwartz–Zippel "exceptional variety" argument cannot rule out. Finite low-ord
 > **RIM `RIM_H(1, ω, ω², …, ω^{n-1})` has full column rank over `F_q`** (equivalently the GM-MDS
 > cyclotomic determinant `det[∏_{j∈Sᵢ}(ωᵇ − ωʲ)]` is nonzero) **for every `k`-weakly-partition-connected
 > `H` at order `ℓ ≈ (1−R)/ε`** — which would import BGM/AGGLZ capacity and give `B_C(E) ≤ O(1/ε)` at
-> radius `1−ρ−ε`, closing the prize. Proving it = positive; an explicit cyclotomic/subgroup dependency
+> radius `1−ρ−ε`, settling the Grand List Decoding problem. Proving it = positive; an explicit cyclotomic/subgroup dependency
 > that makes the determinant vanish = negative.
 
 **Tractability note (the actionable angle).** For a radius bounded a *constant* `ε` below capacity, the

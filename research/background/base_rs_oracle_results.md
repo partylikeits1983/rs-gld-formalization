@@ -5,7 +5,7 @@ RS arithmetic). **Status of all results below: FINITE EVIDENCE ONLY, not asympto
 
 **Goal.** Search fixed smooth-domain RS for a received word `w` with a large WORST-CASE base list
 `B(η) = |Λ(RS[F,L,k], η)|` **beyond Johnson** (`η > 1−√ρ`), and decide whether `B(η) > 2^{-128}·|F|`
-for large `q`. The prize now reduces (GLD-9 proved) to bounding `B(η)`; the prize fails iff
+for large `q`. The Grand List Decoding target now reduces (GLD-9 proved) to bounding `B(η)`; the Grand List Decoding target fails iff
 `B(η) > 2^{-128}·|F|` in the band. **We track the CONSTANT, not just `Ω(q)`** — a constant list does
 not beat `2^{-128}·q` once `q > (constant)·2^{128}`.
 
@@ -37,15 +37,15 @@ This is **exact and replayable** (the `n/d` distinct `d`-th powers `(c')^d`), fo
 
 **The decisive structural fact.** The list size `n/d` is large **only below the rate** (`a = d < k`,
 i.e. `δ > 1−ρ`): there it is `Ω(n)` (e.g. 64, 128, 256). But `δ > 1−ρ` is **above capacity** — the
-trivial regime where huge lists are expected and do **not** violate the prize (the prize threshold
-`δ*_C < capacity < 1−ρ`). **Inside the prize-relevant band** `(1−√ρ, 1−ρ)` the construction gives
+trivial regime where huge lists are expected and do **not** violate the field-size condition (the list-size threshold
+`δ*_C < capacity < 1−ρ`). **Inside the Johnson-to-capacity band** `(1−√ρ, 1−ρ)` the construction gives
 `n/d ≤ 1/ρ`, a **CONSTANT** independent of `n` and `q` (the smallest 2-power `d > k = ρn` is within a
 factor 2 of `ρn`, so `n/d ≈ 1/ρ`).
 
-## Prize relevance (the constant, tracked)
+## Relevance to the Grand List Decoding target (the constant, tracked)
 
 A constant band list `B = n/d ≤ 1/ρ` beats `2^{-128}·q` **only for `q < B·2^{128} ≈ 2^{130}`**.
-For "sufficiently large `q`" (the prize regime, `q → ∞`) it does **NOT** beat `2^{-128}·|F|`. So the
+For "sufficiently large `q`" (the large-field regime, `q → ∞`) it does **NOT** beat `2^{-128}·|F|`. So the
 multiplicative-BKR construction is **NOT a scalable band counterexample**: it gives `Ω(q)` lists only
 in the trivial above-capacity regime, and only `O_ρ(1)` in the band.
 

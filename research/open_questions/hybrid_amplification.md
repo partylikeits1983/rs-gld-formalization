@@ -6,7 +6,7 @@ This is the one residual micro-question left by the smooth-coset analysis
 ## What is settled
 
 A single-scale subgroup-binomial defect on `L = μ_{2^s}` contributes only `O(1/ρ)` codewords in the
-Johnson-to-capacity band — a constant in `n` and `q`, far below the prize threshold `2^{-128}·|F|`.
+Johnson-to-capacity band — a constant in `n` and `q`, far below the list-size threshold `2^{-128}·|F|`.
 The received word `w = (x^d)` and the `n/d` constant codewords `ω^{td}` realize this, and the defect
 intersection lives *above* capacity when `d < k`. So smooth cosets fail the generic-RS sufficient
 condition (`MDS(ℓ)`), but the single-scale defect is benign.

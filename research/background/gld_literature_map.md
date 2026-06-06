@@ -43,7 +43,7 @@ proof is a deletion/rank argument that reduces bounding the `m`-interleaved list
 `δ*_{C^{≡m}}` is governed by the base-RS list size `|Λ(RS,δ)|`. The gcd "dimension collapses by
 `m·deg D`" route (repo GLD-7/8) does *not* beat this, because the `m`-fold dimension penalty is
 offset by the adversary's `m`-fold extra freedom — the structural reason GGR is m-independent. The
-`m`-interleaving in the prize is a **red herring**, as framed.
+`m`-interleaving in the Grand List Decoding formulation is a **red herring**, as framed.
 
 ---
 
@@ -97,7 +97,7 @@ GLD-9)** composed with the **Johnson baseline (GLD-10)**. Concretely:
 ## 6. Takeaways for the repo's honesty ledger
 
 - The repo's existing framing is **correct and corroborated**: GGR/Lemma 2.10 is m-independent
-  (verified against arXiv 0811.4395), so the prize reduces to base-RS beyond Johnson = external/open.
+  (verified against arXiv 0811.4395), so the Grand List Decoding target reduces to base-RS beyond Johnson = external/open.
 - The one subtle trap checked and cleared: BKR10's super-poly list **looks** like a structured-domain
   counterexample (`δ*=Johnson`), but it is **additive (full-field subspace)**, not the **multiplicative
   coset** of Def 2.12, and lives at **agreement below the rate** (below Johnson for ρ∈{1/2,…,1/16}).

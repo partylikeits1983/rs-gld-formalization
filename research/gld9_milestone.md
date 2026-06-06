@@ -49,7 +49,7 @@ no-white case; red depth via gap-halving `2(D−s') ≤ D−s` (no logs in the c
 
 - The GLD-9 `sorry` is **removed**. `interleave_list_size_ggr` re-exports the proven core.
 - **GLD-11** (`interleavedRS_field_size_condition_of_base_bound`, `BaseRSReduction.lean`) is now **unconditional,
-  axiom-clean**: the interleaved-RS prize reduces, with no `sorry`, to a single base-RS bound `B`.
+  axiom-clean**: the interleaved-RS Grand List Decoding target reduces, with no `sorry`, to a single base-RS bound `B`.
 - Proven files moved out of `Conjectures/` into `RSGLD/ListDecoding/`.
 
 ## Audit
@@ -64,6 +64,6 @@ no-white case; red depth via gap-halving `2(D−s') ≤ D−s` (no logs in the c
 ## Deferred (optional, not needed)
 
 Real `δ,η` / `⌈log₂⌉` wrapper (`b=⌈η/(δ−η)⌉`, `r=⌈log₂(δ/(δ−η))⌉`). The integer/`E/n` form is
-mathematically stronger and connects to the prize directly; the ceiling/log wrapper is cosmetic and
+mathematically stronger and connects to the Grand List Decoding target directly; the ceiling/log wrapper is cosmetic and
 would only add floor-arithmetic churn. **TODO (optional polish):** derive the real `δ,η` wrapper from
-the integer theorem if a later prize theorem needs it.
+the integer theorem if a later Grand List Decoding theorem needs it.

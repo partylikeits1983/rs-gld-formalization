@@ -14,7 +14,7 @@ import RSGLD.ListDecoding.EraseDecode
 import RSGLD.ListDecoding.GGRComposition
 import RSGLD.ListDecoding.InterleavedListSize
 import RSGLD.ListDecoding.Interleaved
-import RSGLD.ListDecoding.Prize
+import RSGLD.ListDecoding.GrandListDecoding
 import RSGLD.ListDecoding.BaseRSReduction
 import RSGLD.ListDecoding.MuralidharaSenPlugin
 

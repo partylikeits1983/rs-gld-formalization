@@ -24,17 +24,17 @@ constants**.
     |Λ(C^{≡m}, η)| ≤ Nat.choose(b+r, r) · B(η)^r
 ```
 with `b,r` from `(η, δ_min)` only — independent of the interleaving order `m`. So the interleaved /
-folded prize is controlled by the **base** quantity `B(η)`.
+folded Grand List Decoding target is controlled by the **base** quantity `B(η)`.
 
-## The prize condition
+## The field-size condition
 
-The grand list-decoding prize `|Λ(C^{≡m}, δ*_C)| ≤ 2^{-128}·|F|` is **implied** (via GLD-11
+The grand list-decoding target `|Λ(C^{≡m}, δ*_C)| ≤ 2^{-128}·|F|` is **implied** (via GLD-11
 `interleavedRS_field_size_condition_of_base_bound`, axiom-clean) by a base bound `B(η) ≤ B` together with the
 field-size condition
 ```
     Nat.choose(b+r, r) · B^r ≤ 2^{-128} · |F|.
 ```
-Conversely, the prize **fails** at radius `η` if `B(η) > 2^{-128}·|F|` for sufficiently large `|F|`
+Conversely, the Grand List Decoding target **fails** at radius `η` if `B(η) > 2^{-128}·|F|` for sufficiently large `|F|`
 (note: this needs `B(η) = Ω(|F|)` — a constant or any `o(|F|)` does NOT beat `2^{-128}·|F|`
 asymptotically, since `2^{-128}` is a fixed constant).
 

@@ -9,7 +9,7 @@ empirical frontier engine: for `C = RS[GF(q), L, k]` with `L` a smooth domain
                                  #{ c in C : agreement(c, w) >= a },
 
 i.e. the worst-case list size at absolute agreement threshold `a` (errors n-a,
-relative radius delta = (n-a)/n = 1 - a/n). The prize condition is the integer
+relative radius delta = (n-a)/n = 1 - a/n). The field-size condition is the integer
 statement `2^128 * listSize <= q`.
 
 SINGLE-ORACLE RULE. Field/RS arithmetic is REUSED from `scripts/mca_oracle.py`
@@ -345,7 +345,7 @@ def main():
         if abs(a - anc["unique"][1]) < 1:
             note.append("~unique")
         bound_ok = (2 ** 128) * size <= args.q
-        note.append("prize-OK" if bound_ok else "prize-FAIL(small q)")
+        note.append("target-OK" if bound_ok else "target-FAIL(small q)")
         print(f"  {a:>3} {str(delta):>7} {size:>9}  {' '.join(note)}")
 
 

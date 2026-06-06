@@ -1,14 +1,25 @@
 # rs-gld-formalization
 
-A Lean 4 / Mathlib formalization of a Reed–Solomon interleaving list-size reduction, together with
-a smooth-coset obstruction to importing generic Reed–Solomon capacity methods.
-
-This repository concerns the **grand list-decoding problem** for interleaved Reed–Solomon codes:
+A standalone Lean 4 / Mathlib research artifact on the **Grand List Decoding problem** for
+interleaved Reed–Solomon codes:
 
 > If many interleaved Reed–Solomon codewords are close to a received word, how large can that list be?
 
-**In one sentence:** interleaving reduces to base RS; smooth cosets are not generic; the true
-base-RS frontier remains open.
+**What we do.** We formalize an interleaving list-size reduction for Reed–Solomon codes. It reduces
+the Grand List Decoding problem for interleaved Reed–Solomon codes to a base Reed–Solomon
+worst-case list-size question:
+
+```text
+Grand List Decoding for interleaved RS  →  base RS worst-case list size
+```
+
+We then compose this reduction with the Muralidhara–Sen slightly-above-Johnson base-RS bound, and we
+identify a smooth-coset higher-order-MDS obstruction showing that generic/random Reed–Solomon
+capacity methods do not transfer directly to roots-of-unity domains.
+
+**Scope.** We do not solve the full Grand List Decoding problem. We isolate the base-RS list-size
+bottleneck, give a modest Muralidhara–Sen plug-in, and show that smooth cosets fail higher-order
+MDS. The remaining open object is base smooth-domain Reed–Solomon list size beyond Johnson.
 
 The headline Lean theorems are `sorry`-free and depend only on Lean's three foundational axioms
 (`propext`, `Classical.choice`, `Quot.sound`), verified by `./scripts/check_axioms.sh`. Everything

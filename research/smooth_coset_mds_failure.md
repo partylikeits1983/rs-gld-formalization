@@ -3,7 +3,7 @@
 **Verdict: route B — mild-defect theorem.** Smooth cosets `L = μ_{2^s}` fail `MDS(ℓ)` for every
 `ℓ ≥ 3` (explicit binomial mechanism), which **blocks the BGM/AGGLZ generic-RS capacity import**.
 But the defect converts only into an `O(1/ρ)` Hamming-ball list, and its natural witness sits
-**above capacity** — so it is a *method* obstruction, **not** a prize counterexample. `δ*_C` stays
+**above capacity** — so it is a *method* obstruction, **not** a Grand-List-Decoding counterexample. `δ*_C` stays
 open. Muralidhara–Sen (Fork A, `MuralidharaSenPlugin.lean`) is the separate modest positive track.
 
 Companion: `research/smooth_coset_mds3_target.md` (the ℓ=3 attack), `research/smooth_coset_genericity_literature.md`
@@ -84,7 +84,7 @@ Two regimes, both giving a constant list — for *different* reasons:
 
 - **`d < k` (the MDS-defect regime).** Then `a = d ≤ k−1 < k = ρn`, so
   `δ = 1 − d/n > 1 − k/n = 1 − ρ ≥ H_q⁻¹(1−ρ)`: the witness sits **strictly above capacity**, where
-  large lists are *expected* and carry **no prize implication**. (Confirmed: every `d<k` row reports
+  large lists are *expected* and carry **no Grand-List-Decoding implication**. (Confirmed: every `d<k` row reports
   `ABOVE capacity`.) This is the sharp reason the higher-order-MDS defect is benign: the defect lives
   at agreement `≤ k−1`, i.e. radius at/above capacity, not in the band `(1−√ρ, 1−ρ)`.
 
@@ -103,7 +103,7 @@ dimension `2d−k` is positive only for `d > k/2`, and the number of available c
 
 The construction contributes at most `n/d` codewords from one subgroup scale, and `n/d ≤ n/1`; in the
 band (`d>k`) it is `< 1/ρ`. **For a fixed rate `ρ`, this is a constant in `n` and `q`** — it can never
-reach the prize threshold `> 2^{-128}·|F|` for cryptographic `q` (would need `q < (n/d)·2^{128}`).
+reach the list-size threshold `> 2^{-128}·|F|` for cryptographic `q` (would need `q < (n/d)·2^{128}`).
 This matches the independent worst-case oracle sweep (`research/base_rs_oracle_results.md`: in-band
 list constant `≤ 1/ρ` across all tested `q`, including the `n≈√q` regime).
 
@@ -119,7 +119,7 @@ Amplification routes considered (and why single-scale binomials don't obviously 
 4. **Additive–multiplicative hybrid (BSKR ⊗ coset)** and **rational `w = P/Q`** with `Q` coset-aligned:
    not pursued here; flagged as the **only residual micro-question**. The additive BSKR defect is
    `Ω(super-poly)` but at *full field* `n=|F|` and *below the rate* — does not combine cleanly with a
-   multiplicative coset at the prize rates without a subfield coincidence.
+   multiplicative coset at the Grand List Decoding rates without a subfield coincidence.
 
 **Conclusion (route B).** Pure single-subgroup binomial defects yield only `O(1/ρ)` codewords in the
 Johnson-to-capacity band; the genuine higher-order-MDS defect lives above capacity. The smooth-coset
