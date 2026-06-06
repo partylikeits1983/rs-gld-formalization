@@ -3,7 +3,7 @@
 A Lean 4 / Mathlib formalization of a Reed–Solomon interleaving list-size reduction, together with
 a smooth-coset obstruction to importing generic Reed–Solomon capacity methods.
 
-This repository concerns the **grand list-decoding problem** for interleaved Reed–Solomon codes —
+This repository concerns the **grand list-decoding problem** for interleaved Reed–Solomon codes,
 roughly:
 
 > If many interleaved Reed–Solomon codewords are close to a received word, how large can that list be?
@@ -12,7 +12,7 @@ roughly:
 > base-RS frontier remains open.
 
 The headline Lean theorems are `sorry`-free and depend only on Lean's three foundational axioms
-(`propext`, `Classical.choice`, `Quot.sound`) — verified by `./scripts/check_axioms.sh`. Everything
+(`propext`, `Classical.choice`, `Quot.sound`), verified by `./scripts/check_axioms.sh`. Everything
 builds with `lake build`.
 
 ---
@@ -77,7 +77,7 @@ The central question is:
 
 ## 1. The main reduction
 
-The first result is the GGR interleaving list-size reduction — formalized as
+The first result is the GGR interleaving list-size reduction, formalized as
 [`interleave_list_size_ggr`](RSGLD/ListDecoding/InterleavedListSize.lean#L46).
 
 It says:
@@ -633,7 +633,7 @@ and Mathlib revision are pinned in `lean-toolchain` and `lake-manifest.json`.
 
 ```bash
 lake exe cache get      # fetch prebuilt Mathlib oleans (fast)
-lake build              # build the whole closure — green, zero sorry, zero new axioms
+lake build              # build the whole closure: green, zero sorry, zero new axioms
 
 ./scripts/check_axioms.sh                            # assert the headline theorems are axiom-clean
 python3 -V && ./scripts/reproduce_experiments.sh     # reproduce the finite-field experiments
