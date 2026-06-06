@@ -23,8 +23,6 @@ builds with `lake build`.
 >
 > The background notes explain Reed–Solomon codes, Hamming balls, interleaving, and the Johnson radius.
 
----
-
 ## 0. The question
 
 Let
@@ -73,8 +71,6 @@ The central question is:
 
 > Can we control the list size of interleaved Reed–Solomon codes in this band?
 
----
-
 ## 1. The main reduction
 
 The first result is the GGR interleaving list-size reduction, formalized as
@@ -112,8 +108,6 @@ This is the first important point:
 >
 > The remaining mystery is the base Reed–Solomon list size.
 
----
-
 ## 2. What was formalized
 
 The GGR reduction was formalized in Lean.
@@ -149,8 +143,6 @@ GGR interleaving reduction
 interleaved RS list-size bound
 ```
 
----
-
 ## 3. What changed?
 
 Before this reduction, the problem looked like:
@@ -178,8 +170,6 @@ It removes the interleaving layer and isolates the true bottleneck:
 This is the main conceptual progress.
 
 The Grand List Decoding problem is not solved, but it has been narrowed.
-
----
 
 ## 4. The Muralidhara–Sen plug-in
 
@@ -226,8 +216,6 @@ The Muralidhara–Sen bound itself is taken as a hypothesis, not re-proved here.
 
 This is a real above-Johnson consequence. But it is important to understand its size.
 
----
-
 ## 5. Why this is only slightly above Johnson
 
 The Muralidhara–Sen radius is
@@ -264,8 +252,6 @@ So Muralidhara–Sen gives a real but very small movement past Johnson.
 
 It is not a constant-radius breakthrough.
 
----
-
 ## 6. The stronger hope: import generic RS capacity
 
 There is another possible route.
@@ -291,8 +277,6 @@ The question was:
 > Do these smooth domains satisfy the same genericity conditions used in random/generic Reed–Solomon capacity proofs?
 
 The answer we found is no.
-
----
 
 ## 7. The obstruction: smooth cosets fail higher-order MDS
 
@@ -346,8 +330,6 @@ This is the second major finding:
 
 > Smooth roots-of-unity domains are not generic in the higher-order-MDS sense.
 
----
-
 ## 8. The simplest example: pairs x and −x
 
 The obstruction is easiest to see using pairs.
@@ -386,8 +368,6 @@ Three such polynomials must be linearly dependent.
 
 This is the smallest instance of the smooth-coset obstruction.
 
----
-
 ## 9. Why this obstruction matters
 
 The obstruction matters because it blocks a proof strategy.
@@ -416,8 +396,6 @@ This does not prove that smooth domains have bad list decoding.
 
 It proves that this particular route does not work.
 
----
-
 ## 10. Does the obstruction give a counterexample?
 
 Not by itself.
@@ -439,8 +417,6 @@ At first this looks like a possible large-list construction.
 But the list-size fallout is mild.
 
 There are two regimes.
-
----
 
 ## 11. Regime one: d < k
 
@@ -470,8 +446,6 @@ It is outside the useful Johnson-to-capacity band.
 
 The defect is real, but this witness does not determine $\delta_C^*$.
 
----
-
 ## 12. Regime two: d > k
 
 To enter the Johnson-to-capacity band, we need agreement greater than $k$.
@@ -498,8 +472,6 @@ So the list size is at most about 16.
 
 That is not a large-list counterexample.
 
----
-
 ## 13. What this tells us
 
 The smooth-coset obstruction says:
@@ -517,8 +489,6 @@ It blocks the generic-RS import route.
 But it also shows that the simplest smooth-coset defect does not create a large list in the useful band.
 
 That narrows the problem.
-
----
 
 ## 14. The remaining open core
 
@@ -556,8 +526,6 @@ This is the true remaining frontier:
 
 > base smooth-domain Reed–Solomon list size beyond Johnson.
 
----
-
 ## 15. The whole story
 
 ```text
@@ -592,8 +560,6 @@ Remaining open core:
   smooth-domain base RS list size beyond Johnson
 ```
 
----
-
 ## 16. Short version
 
 The formalized GGR theorem says
@@ -618,8 +584,6 @@ Therefore, the remaining missing theorem is still:
 
 $$\text{base smooth-domain Reed–Solomon list size beyond Johnson}.$$
 
----
-
 ## 17. One-sentence version
 
 The interleaved problem reduces to ordinary Reed–Solomon list decoding; Muralidhara–Sen gives a tiny above-Johnson positive result; smooth roots-of-unity domains are provably non-generic, but their obvious defect is too mild to solve the problem, leaving base smooth-domain Reed–Solomon list size beyond Johnson as the central remaining obstacle.
@@ -639,8 +603,6 @@ lake build              # build the whole closure: green, zero sorry, zero new a
 python3 -V && ./scripts/reproduce_experiments.sh     # reproduce the finite-field experiments
 ```
 
----
-
 ## Theorem map
 
 Each declaration links directly to the line that proves it.
@@ -658,8 +620,6 @@ Each declaration links directly to the line that proves it.
 
 Full dependency graph: `research/theorem_dependency_graph.md`.
 
----
-
 ## Repository layout
 
 ```text
@@ -674,8 +634,6 @@ research/               Result write-ups, theorem dependency graph, open questio
 experiments/list_decoding/   Finite-field cross-checks (Python)
 scripts/                Build, axiom-check, and experiment-reproduction scripts
 ```
-
----
 
 ## Provenance
 
