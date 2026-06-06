@@ -1,0 +1,11 @@
+name = "mca-formal"
+version = "0.1.0"
+defaultTargets = ["MCA"]
+
+[[require]]
+name = "mathlib"
+git  = "https://github.com/leanprover-community/mathlib4"
+rev  = "v4.29.0"
+
+[[lean_lib]]
+name = "MCA"

@@ -1,0 +1,9 @@
+/.lake
+build/
+
+.DS_Store
+
+# Python bytecode cache.
+__pycache__/
+scripts/__pycache__/
+experiments/**/__pycache__/
