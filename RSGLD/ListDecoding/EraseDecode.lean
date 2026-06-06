@@ -1,22 +1,21 @@
 import Mathlib
-import MCA.Code.Hamming
-import MCA.ReedSolomon.MDS
+import RSGLD.Code.Hamming
+import RSGLD.ReedSolomon.MDS
 
 /-!
-# Erase-decode leaves L1′–L6 for the GGR interleaving bound (GLD-9)
+# Erase-decode leaves for the GGR interleaving bound
 
-Per the expert directive (`research/ggr_2_10_proof_plan.md`), erasures are tracked as a
-**coordinate predicate** `hammingDistOutside S` (the `distOutside` of the plan), NOT a
-`Fin (n−|S|)` punctured type (which would create cast hell). This file accumulates the leaves as
-they land; the composition assembles them with `MCA.ListDecoding.treeLeaves_le` (L7, proven).
+Erasures are tracked as a **coordinate predicate** `hammingDistOutside S` (disagreements outside
+the erased set `S`), rather than a `Fin (n−|S|)` punctured type (which would create cast hell).
+The composition (`GGRComposition.lean`) assembles these leaves with the tree leaf-count
+`RSGLD.ListDecoding.treeLeaves_le`.
 
-So far:
 * `hammingDistOutside` — disagreements outside the erased set `S`.
-* `hammingDist_le_hammingDistOutside_add_card` — **L1′ (combinatorial core)**: erasing `S` removes
+* `hammingDist_le_hammingDistOutside_add_card` — **combinatorial core**: erasing `S` removes
   at most `|S|` disagreements, i.e. `hammingDist x y ≤ hammingDistOutside S x y + |S|`.
 -/
 
-namespace MCA.Code
+namespace RSGLD.Code
 
 variable {α : Type*} [DecidableEq α] {n : ℕ}
 
@@ -67,9 +66,9 @@ theorem hammingDistOutside_triangle (S : Finset (Fin n)) (x y z : Fin n → α) 
   · right; exact ⟨by rw [← hxy]; exact hxz, hiS⟩
   · left; exact ⟨hxy, hiS⟩
 
-/-! ### The integer erase-decode budget invariant (math-agent confirmed)
+/-! ### The integer erase-decode budget invariant
 
-Per the expert directive, the whole GGR core is done in **integer counts first**:
+The whole GGR core is done in **integer counts first**:
 * `D` — a minimum-distance lower bound of `C`, as a coordinate count (`≈ δn`);
 * `E` — the decoding radius in errors (`≈ ηn`);
 * `G := D − E` (`≈ (δ−η)n`), with `E < D` so `G > 0`;
@@ -133,7 +132,7 @@ differ, **outside any erased set `S`**, on at least `D − |S|` coordinates, whe
 coordinate-count lower bound on `minDist C · n`. This is the geometric input to white-uniqueness
 (L3) and blue-uniqueness (L4): `(D−E) + (E−s) = D−s` then forces siblings to coincide. -/
 
-open MCA.ReedSolomon in
+open RSGLD.ReedSolomon in
 /-- A coordinate-count minimum-distance bound: distinct codewords differ on `≥ D` positions, where
 `D ≤ minDist C · n`. -/
 theorem minDistCount_le_hammingDist {F : Type*} [Field F] [DecidableEq F] {n : ℕ} (hn : 0 < n)
@@ -153,7 +152,7 @@ theorem minDistCount_le_hammingDist {F : Type*} [Field F] [DecidableEq F] {n : �
   have : (D : ℝ) ≤ (hammingDist c c' : ℝ) := le_trans hD h1
   exact_mod_cast this
 
-open MCA.ReedSolomon in
+open RSGLD.ReedSolomon in
 /-- **L1′ proper.** Distinct codewords of `C` differ on at least `D − |S|` coordinates **outside**
 the erased set `S` (`D ≤ minDist C · n`). The geometric distance-drop driving white/blue uniqueness. -/
 theorem D_sub_card_le_hammingDistOutside {F : Type*} [Field F] [DecidableEq F] {n : ℕ} (hn : 0 < n)
@@ -170,7 +169,7 @@ Both follow from L1′ (`D_sub_card_le_hammingDistOutside`) + the restricted tri
 the integer identity `(D−E) + (E−s) = D−s`. A **white** child (`w < G = D−E`) coincides with any
 extendable sibling (`s + w' ≤ E`); two **blue** children (`2w < D−s`) coincide. -/
 
-open MCA.ReedSolomon in
+open RSGLD.ReedSolomon in
 /-- **L3 (white-edge uniqueness).** A White child `c` (`hammingDistOutside S c R < D−E`) equals any
 extendable sibling `c'` (`|S| + hammingDistOutside S c' R ≤ E`): so a White node has a unique child. -/
 theorem white_unique {F : Type*} [Field F] [DecidableEq F] {n : ℕ} (hn : 0 < n)
@@ -185,7 +184,7 @@ theorem white_unique {F : Type*} [Field F] [DecidableEq F] {n : ℕ} (hn : 0 < n
   have hsymm := hammingDistOutside_comm S R c'
   omega
 
-open MCA.ReedSolomon in
+open RSGLD.ReedSolomon in
 /-- **L4 (blue-edge uniqueness).** Two Blue children (`2·hammingDistOutside S · R < D − |S|`) of a
 node coincide: so a node has at most one Blue child. -/
 theorem blue_unique {F : Type*} [Field F] [DecidableEq F] {n : ℕ} (hn : 0 < n)
@@ -200,4 +199,4 @@ theorem blue_unique {F : Type*} [Field F] [DecidableEq F] {n : ℕ} (hn : 0 < n)
   have hsymm := hammingDistOutside_comm S R c'
   omega
 
-end MCA.Code
+end RSGLD.Code

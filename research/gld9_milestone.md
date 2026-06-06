@@ -5,7 +5,7 @@ This was the one tractable in-repo direction the literature triage identified; i
 
 ## Theorem (integer parameterized form — the durable statement)
 
-`MCA.ListDecoding.maxListSize_interleave_le_int` (re-exported as `interleave_list_size_ggr`):
+`RSGLD.ListDecoding.maxListSize_interleave_le_int` (re-exported as `interleave_list_size_ggr`):
 
 > For a linear code `C ⊆ F^n` (`F` finite, `0 < n`), integer error radius `E < D` with
 > `(D:ℝ) ≤ minDist C · n`, and `b r : ℕ` (write `G := D − E`) satisfying
@@ -48,16 +48,16 @@ no-white case; red depth via gap-halving `2(D−s') ≤ D−s` (no logs in the c
 ## Consequences
 
 - The GLD-9 `sorry` is **removed**. `interleave_list_size_ggr` re-exports the proven core.
-- **GLD-11** (`interleavedRS_prize_of_base_bound`, `BaseRSReduction.lean`) is now **unconditional,
+- **GLD-11** (`interleavedRS_field_size_condition_of_base_bound`, `BaseRSReduction.lean`) is now **unconditional,
   axiom-clean**: the interleaved-RS prize reduces, with no `sorry`, to a single base-RS bound `B`.
-- Proven files moved out of `Conjectures/` into `MCA/ListDecoding/`.
+- Proven files moved out of `Conjectures/` into `RSGLD/ListDecoding/`.
 
 ## Audit
 
 - `#print axioms` of `treeLeaves_le`, `Ninter_le`, `maxListSize_interleave_le_int`,
-  `interleave_list_size_ggr`, `interleavedRS_prize_of_base_bound` → `[propext, Classical.choice,
+  `interleave_list_size_ggr`, `interleavedRS_field_size_condition_of_base_bound` → `[propext, Classical.choice,
   Quot.sound]` only.
-- Full `lake build` green (8302 jobs). No `sorry` in `MCA/ListDecoding/`.
+- Full `lake build` green (8302 jobs). No `sorry` in `RSGLD/ListDecoding/`.
 - Tags: `gld9-leaves-checkpoint`, `gld9-proved`. Commits `b50ee7f` (Ninter_le) → `59d4592` (integer
   theorem) → `4930205` (discharge) → milestone-lock (move out of Conjectures).
 

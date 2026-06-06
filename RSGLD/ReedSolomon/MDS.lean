@@ -1,7 +1,7 @@
 import Mathlib
-import MCA.Code.Hamming
-import MCA.Code.Interleaved
-import MCA.ReedSolomon.Defs
+import RSGLD.Code.Hamming
+import RSGLD.Code.Interleaved
+import RSGLD.ReedSolomon.Defs
 
 /-!
 # Reed–Solomon codes are MDS
@@ -10,13 +10,12 @@ The dimension of `RS[F, L, k]` is `k` (when `k ≤ |L|`), and its minimum distan
 meets the Singleton bound: `(|L| - k + 1)/|L|`. (Definition 2.11 / standard.)
 
 Both proofs rest on the fact that two distinct polynomials of degree `< k` agree
-on at most `k - 1` points — Mathlib has the polynomial side of this. They are left
-as documented `sorry`s here; this file fixes the *statements*.
+on at most `k - 1` points (the polynomial root count, from Mathlib).
 -/
 
-namespace MCA.ReedSolomon
+namespace RSGLD.ReedSolomon
 
-open MCA.Code
+open RSGLD.Code
 
 variable {F : Type*} [Field F] [DecidableEq F]
 
@@ -189,6 +188,7 @@ theorem evalMap_injOn_degreeLT (L : Finset F) (k : ℕ) (hkn : k ≤ L.card) :
       omega
   exact Subtype.ext hp0
 
+omit [DecidableEq F] in
 /-- The Reed–Solomon code has dimension `k` over `F` (when `k ≤ |L|`). -/
 theorem code_dim_eq_k (L : Finset F) (k : ℕ) (hkn : k ≤ L.card) :
     Module.finrank F (code L k) = k := by
@@ -394,4 +394,4 @@ theorem deltaMin (L : Finset F) (k : ℕ) (hk : 0 < k) (hkn : k ≤ L.card) :
         exact_mod_cast hlb
       gcongr
 
-end MCA.ReedSolomon
+end RSGLD.ReedSolomon

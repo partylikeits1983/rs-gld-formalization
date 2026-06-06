@@ -1,23 +1,24 @@
 import Mathlib
-import MCA.Code.Interleaved
-import MCA.ListDecoding.EraseDecode
+import RSGLD.Code.Interleaved
+import RSGLD.ListDecoding.EraseDecode
 
 /-!
 # GGR interleaving bound — the composition (erase-decode induction)
 
-Assembles the leaves of `EraseDecode.lean` (L1′–L6) and `TreeCount.lean` (L7) into the integer
-parameterized GGR bound (paper Lemma 2.10 = GGR Thm 2.5). Per the math-agent execution order:
-A (red fan-out ≤ Λ), B (column-split count decomposition), C (induction on `m` with the
-white/no-white split), D (zero-case guards), E (integer theorem), F (discharge GLD-9).
+Assembles the erase-decode leaves of `EraseDecode.lean` and the tree leaf-count of
+`TreeCount.lean` into the integer-parameterized GGR bound (paper Lemma 2.10 = GGR Thm 2.5). The
+steps are: the red fan-out bound `≤ Λ`, the column-split count decomposition, the induction on `m`
+(with the white / no-white case split and zero-case guards), the integer theorem, and the bridge
+to `maxListSize`.
 
 This file works with **columns** `Fin m → (Fin n → F)` (each a base word) and counts tuples of base
 codewords whose total erased set is within the integer budget `E`. The bridge to
 `maxListSize (interleave C m) (E/n)` is made at the end.
 -/
 
-namespace MCA.ListDecoding
+namespace RSGLD.ListDecoding
 
-open MCA.Code
+open RSGLD.Code
 
 variable {F : Type*} [Field F] [DecidableEq F] {n : ℕ}
 
@@ -30,13 +31,16 @@ columns `R` — the total error/erasure set of the interleaved word. -/
 def colBadSet (m : ℕ) (M R : Fin m → (Fin n → F)) : Finset (Fin n) :=
   Finset.univ.filter (fun i => ∃ j : Fin m, M j i ≠ R j i)
 
+omit [Field F] in
 @[simp] theorem colBadSet_zero (M R : Fin 0 → (Fin n → F)) : colBadSet 0 M R = ∅ := by
   simp [colBadSet]
 
+omit [Field F] in
 /-- `|eraseSet c R₀| = hammingDist c R₀` — disagreements count is the Hamming distance. -/
 theorem card_eraseSet (c R₀ : Fin n → F) : (eraseSet c R₀).card = hammingDist c R₀ := by
   rfl
 
+omit [Field F] in
 /-- **Column split.** The total erased set of `m+1` columns is the first column's erasures together
 with the tail's total erased set. This drives the count decomposition. -/
 theorem colBadSet_succ (m : ℕ) (M R : Fin (m + 1) → (Fin n → F)) :
@@ -92,6 +96,7 @@ theorem Ninter_succ_le (C : LinearCode F n) [Fintype C] (m : ℕ)
     · subst hj; rw [h1.2, h2.2]
     · subst hk; exact congrFun heq k
 
+omit [Field F] in
 /-- New erasures: `|S ∪ eraseSet c R₀| = |S| + hammingDistOutside S c R₀`. So extendability
 `|S ∪ eraseSet c R₀| ≤ E` is `S.card + w ≤ E` with `w := hammingDistOutside S c R₀`. -/
 theorem card_union_eraseSet (S : Finset (Fin n)) (c R0 : Fin n → F) :
@@ -139,6 +144,7 @@ theorem baseListCount_pos (C : LinearCode F n) [Fintype F] [Fintype C] (E : ℕ)
     ⟨⟨0, C.zero_mem⟩, by simp [Finset.mem_filter]⟩
   exact hne.card_pos
 
+omit [Field F] in
 /-- Extendable codewords lie in the base list at `R₀`: `|S ∪ eraseSet c R₀| ≤ E ⟹ hammingDist c R₀ ≤ E`. -/
 theorem hammingDist_le_of_card_union_le {S : Finset (Fin n)} {c R0 : Fin n → F} {E : ℕ}
     (h : (S ∪ eraseSet c R0).card ≤ E) : hammingDist c R0 ≤ E := by
@@ -149,7 +155,7 @@ theorem hammingDist_le_of_card_union_le {S : Finset (Fin n)} {c R0 : Fin n → F
 
 /-! ### C — the erase-decode induction (integer parameterized GGR bound) -/
 
-open MCA.ReedSolomon in
+open RSGLD.ReedSolomon in
 /-- **C — the integer parameterized GGR bound (count form).** Under the integer invariant, the
 interleaved count is bounded by `Nat.choose (b+r) r · Λ^r` with `Λ` the global base list size.
 Induction on the column count `m`, with the white (unique child, same budgets) / no-white
@@ -199,14 +205,14 @@ theorem Ninter_le (C : LinearCode F n) [Fintype F] [Fintype C] (hn : 0 < n)
         rw [hcard]; exact Inv.white ⟨hInv1, hInv2, hInv3⟩ (Nat.le_add_right _ _) hc₀ext
       exact ih b r (fun j => R j.succ) _ hInv'
     · -- NO-WHITE case
-      push_neg at hW   -- hW : ∀ c, s + w c ≤ E → D - E ≤ w c
+      push Not at hW   -- hW : ∀ c, s + w c ≤ E → D - E ≤ w c
       rcases Nat.eq_zero_or_pos r with hr0 | hrpos
       · -- r = 0 ⟹ s = E ⟹ no extendable child ⟹ sum 0
         subst hr0
         rw [Finset.sum_eq_zero (fun c _ => ?_)]
         · simp
         apply Ninter_eq_zero; rw [hcard]
-        by_contra hle; push_neg at hle
+        by_contra hle; push Not at hle
         have := hW c hle
         simp only [pow_zero, Nat.one_mul] at hInv3
         omega
@@ -219,7 +225,7 @@ theorem Ninter_le (C : LinearCode F n) [Fintype F] [Fintype C] (hn : 0 < n)
         have hsupp : ∀ c ∈ (Finset.univ : Finset C), c ∉ blueExt ∪ redExt → g c = 0 := by
           intro c _ hc
           apply Ninter_eq_zero; rw [hcard]
-          by_contra hle; push_neg at hle
+          by_contra hle; push Not at hle
           have hwG : D - E ≤ w c := hW c hle
           apply hc
           rw [Finset.mem_union, hblue, hred, Finset.mem_filter, Finset.mem_filter]
@@ -289,6 +295,7 @@ theorem Ninter_le (C : LinearCode F n) [Fintype F] [Fintype C] (hn : 0 < n)
 
 /-! ### Bridge — from the count `Ninter` to `maxListSize (interleave C m)` -/
 
+omit [Field F] in
 /-- The interleaved Hamming distance equals the total erased-set (union of column disagreements). -/
 theorem hammingDist_eq_colBadSet_card (m : ℕ) (M R : Fin n → Fin m → F) :
     hammingDist M R = (colBadSet m (fun j i => M i j) (fun j i => R i j)).card := by
@@ -343,7 +350,7 @@ theorem baseListCount_eq_maxListSize (C : LinearCode F n) [Fintype F] [Fintype C
   · intro h; exact_mod_cast h
   · intro h; exact_mod_cast h
 
-open MCA.ReedSolomon in
+open RSGLD.ReedSolomon in
 /-- **E — the integer parameterized GGR bound for `maxListSize`.** Under the integer conditions
 `E ≤ b·(D−E)` and `D ≤ 2^r·(D−E)` (with `D ≤ minDist C · n`, `E < D`):
 `|Λ(C^{≡m}, E/n)| ≤ Nat.choose (b+r) r · |Λ(C, E/n)|^r`. Obtained from `Ninter_le` (the count form)
@@ -361,4 +368,4 @@ theorem maxListSize_interleave_le_int (C : LinearCode F n) [Fintype F] [Fintype 
   rw [listAt_interleave_card_eq_Ninter C m hn E R, ← baseListCount_eq_maxListSize C hn E]
   exact Ninter_le C hn D E hED hD m b r (fun j i => R i j) ∅ hInv0
 
-end MCA.ListDecoding
+end RSGLD.ListDecoding

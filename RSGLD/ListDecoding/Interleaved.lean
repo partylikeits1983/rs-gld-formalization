@@ -1,45 +1,33 @@
 import Mathlib
-import MCA.Code.Defs
-import MCA.Code.ListDecode
-import MCA.Code.Interleaved
-import MCA.ReedSolomon.Defs
-import MCA.ReedSolomon.MDS
-import MCA.Code.JohnsonBound
+import RSGLD.Code.Defs
+import RSGLD.Code.ListDecode
+import RSGLD.Code.Interleaved
+import RSGLD.ReedSolomon.Defs
+import RSGLD.ReedSolomon.MDS
 
 /-!
-# Interleaved Reed–Solomon list decoding (grand list decoding challenge)
+# Interleaved Reed–Solomon codes
 
-This module attacks the **grand list decoding challenge** of eprint 2026/680
-(Arnon–Boneh–Fenzi), `references/core/2026-680.pdf`: for `C = RS[F,L,k]` and the
-`m`-interleaved code `C^{≡m}` (Definition 2.9), determine the largest `δ*` with
-`|Λ(C^{≡m}, δ*)| ≤ ε*·|F|`.
+For `C = RS[F,L,k]` (block length `n = |L|`, rate `ρ = k/n`) the `m`-interleaved code
+`C^{≡m}` consists of words `g : Fin n → (Fin m → F)` whose every column `i ↦ g i j` is
+a Reed–Solomon codeword. This file specializes the generic interleaving constructions
+(`RSGLD.Code.interleave`, `listAt`, `maxListSize`) to Reed–Solomon and records the basic
+structural facts used by the interleaving reduction:
 
-The interleaved code itself (`MCA.Code.interleave`, general `m`), the list and max
-list size (`MCA.Code.listAt`, `maxListSize` = Definition 2.8), the sandwich lower
-bound (`maxListSize_interleaved_lb`), and `minDist_interleave_ge` already live in
-the repo; this file specializes to RS and adds the new leaves.
-
-## Honesty (CLAUDE epistemic law)
-
-Paper **Lemma 2.10** bounds `|Λ(C^{≡m},δ)| ≤ r^{b+r}·|Λ(C,δ)|^r` *independently of
-`m`*, so interleaving does **not** move the frontier — the challenge reduces to the
-base-RS list size beyond Johnson (external open, BCIKS20/BCHKS25). The lemmas here
-are the provable scaffolding (overlap, δmin, `m`-power sandwich, Johnson baseline);
-the near-capacity `η^{-O(m)}` prize stays external.
-
-## Leaves
-
-* `interleavedRS`, `mem_interleavedRS` — GLD-1 (wrapper).
-* `interleavedRS_agree_intersection_le` — GLD-2 (overlap lemma `|A_F ∩ A_G| ≤ k−1`).
+* `interleavedRS`, `mem_interleavedRS` — the code and its membership criterion.
+* `interleavedRS_agree_intersection_le` — two distinct interleaved codewords agree with
+  any received word on at most `k − 1` positions (the core counting input).
+* `minDist_interleave_eq`, `interleavedRS_minDist` — interleaving preserves minimum distance.
+* `maxListSize_interleave_le_pow` — the crude `m`-power sandwich `|Λ(C^{≡m})| ≤ |Λ(C)|^m`.
 -/
 
-namespace MCA.ListDecoding
+namespace RSGLD.ListDecoding
 
-open MCA.Code MCA.ReedSolomon Polynomial
+open RSGLD.Code RSGLD.ReedSolomon Polynomial
 
 variable {F : Type*} [Field F] [DecidableEq F]
 
-/-! ### GLD-1 — the interleaved Reed–Solomon code `C^{≡m}` -/
+/-! ### The interleaved Reed–Solomon code `C^{≡m}` -/
 
 /-- The `m`-interleaved Reed–Solomon code `(RS[F,L,k])^{≡m}` (Definition 2.9 ∘ 2.11):
 words `g : Fin n → (Fin m → F)` such that every column `i ↦ g i j` is a degree-`<k`
@@ -48,12 +36,13 @@ evaluation, i.e. a codeword of `RS[F,L,k]`. -/
     Submodule F (Fin L.card → Fin m → F) :=
   interleave (code L k) m
 
+omit [DecidableEq F] in
 /-- Membership in `(RS[F,L,k])^{≡m}`: every column is a Reed–Solomon codeword. -/
 theorem mem_interleavedRS {L : Finset F} {k m : ℕ} {g : Fin L.card → Fin m → F} :
     g ∈ interleavedRS L k m ↔ ∀ j : Fin m, (fun i => g i j) ∈ code L k :=
   mem_interleave
 
-/-! ### GLD-2 — the overlap lemma
+/-! ### The overlap lemma
 
 Two **distinct** interleaved RS codewords, given as `m`-tuples of degree-`<k`
 polynomials `P, Q`, can simultaneously agree with a single received word
@@ -108,7 +97,7 @@ theorem interleavedRS_agree_intersection_le {L : Finset F} {k m : ℕ}
     rwa [Finset.card_image_of_injective S (evalPoints_injective L)] at h1
   omega
 
-/-! ### GLD-4 — the `m`-power sandwich upper bound
+/-! ### The `m`-power sandwich upper bound
 
 `|Λ(C^{≡m}, δ)| ≤ |Λ(C, δ)|^m` (Definition 2.9 remark in eprint 2026/680). Together
 with the existing lower bound `maxListSize_interleaved_lb` this is the full sandwich
@@ -155,7 +144,7 @@ theorem maxListSize_interleave_le_pow [Fintype F] {n : ℕ}
             ≤ hammingDist w (g : Fin n → Fin m → F) := hcol w (g : Fin n → Fin m → F) j
       calc normDist (fun i => w i j) (fun i => (g : Fin n → Fin m → F) i j)
             ≤ normDist w (g : Fin n → Fin m → F) := by
-              unfold normDist; gcongr <;> exact_mod_cast hle
+              unfold normDist; gcongr
         _ ≤ δ := hgd
     · -- injective on the list: a word is determined by its columns
       intro g₁ _ g₂ _ heq
@@ -176,9 +165,9 @@ theorem maxListSize_interleave_le_pow [Fintype F] {n : ℕ}
               (Finset.mem_univ (fun i => w i j))
     _ = (maxListSize C δ) ^ m := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
 
-/-! ### GLD-3 — interleaving preserves the minimum distance
+/-! ### Interleaving preserves the minimum distance
 
-`δmin(C^{≡m}) = δmin(C)` (roadmap D / paper Def 2.9). The `≥` direction is the
+`δmin(C^{≡m}) = δmin(C)` (paper Def 2.9). The `≥` direction is the
 existing `minDist_interleave_ge` (a nonzero interleaved word has weight ≥ that of
 any nonzero column). The `≤` direction uses the constant lift `liftConst`: the
 diagonal embedding of a nonzero base codeword is a nonzero interleaved codeword of
@@ -258,26 +247,4 @@ theorem interleavedRS_minDist (L : Finset F) (k m : ℕ) (hk : 0 < k) (hkn : k �
   show minDist (interleave (code L k) m) = _
   rw [minDist_interleave_eq (code L k) m hm, deltaMin L k hk hkn]
 
-/-! ### GLD-10 — Johnson baseline for the interleaved RS code
-
-Composing the base-RS Johnson list bound (`mds_list_bound`, Corollary 3.3) with the
-`m`-power sandwich (GLD-4): below the Johnson radius `δ ≤ 1−√ρ−η`, the interleaved
-list size is `poly(n,1/η)^m`. This validates the formal framework end-to-end — it is
-the certified (`LIST_CERTIFIED`) tier for `C^{≡m}`. It is **not** near-capacity: the
-bound blows up as `η → 0`, and (Lemma 2.10) interleaving does not move the frontier. -/
-theorem interleavedRS_johnson_bound [Fintype F] (L : Finset F) (k : ℕ)
-    (hk : 0 < k) (hk2 : 2 ≤ k) (hkn : k ≤ L.card) [Fintype (code L k)]
-    (hq : 1 < Fintype.card F) (m : ℕ) [Fintype (interleave (code L k) m)]
-    (η : ℝ) (hη : 0 < η) (ρ : ℝ) (hρ : ρ = (k : ℝ) / (L.card : ℝ))
-    (δ : ℚ) (hδpos : 0 ≤ δ) (hδ : (δ : ℝ) ≤ 1 - Real.sqrt ρ - η) :
-    (maxListSize (interleavedRS L k m) δ : ℝ) ≤ (1 / (2 * η * ρ)) ^ m := by
-  have h4 : maxListSize (interleave (code L k) m) δ ≤ (maxListSize (code L k) δ) ^ m :=
-    maxListSize_interleave_le_pow (code L k) m δ
-  have hbase : (maxListSize (code L k) δ : ℝ) ≤ 1 / (2 * η * ρ) :=
-    mds_list_bound L k hk hk2 hkn hq η hη ρ hρ δ hδpos hδ
-  calc (maxListSize (interleavedRS L k m) δ : ℝ)
-      = (maxListSize (interleave (code L k) m) δ : ℝ) := rfl
-    _ ≤ ((maxListSize (code L k) δ : ℝ)) ^ m := by exact_mod_cast h4
-    _ ≤ (1 / (2 * η * ρ)) ^ m := pow_le_pow_left₀ (Nat.cast_nonneg _) hbase m
-
-end MCA.ListDecoding
+end RSGLD.ListDecoding

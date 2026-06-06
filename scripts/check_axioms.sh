@@ -9,14 +9,14 @@ cd "$(dirname "$0")/.."
 export PATH="$HOME/.elan/bin:$PATH"
 
 THEOREMS=(
-  "MCA.ListDecoding.interleave_list_size_ggr"          # GGR interleaving reduction (core)
-  "MCA.ListDecoding.maxListSize_interleave_le_int"     # GGR reduction (integer form)
-  "MCA.ListDecoding.treeLeaves_le"                     # erase-decode tree leaf count
-  "MCA.ListDecoding.interleavedRS_prize_of_base_bound" # base-RS bound => prize
-  "MCA.ListDecoding.interleaved_prize_of_base_poly_bound"   # Muralidhara–Sen plug-in
-  "MCA.ListDecoding.gld_prize_slightly_above_johnson_of_MS" # MS slightly-above-Johnson corollary
-  "MCA.Candidates.SmoothCosetMDS.binom_three_dependent"     # smooth-coset MDS obstruction (core)
-  "MCA.Candidates.SmoothCosetMDS.binom_three_coeffs_nontrivial"
+  "RSGLD.ListDecoding.interleave_list_size_ggr"          # GGR interleaving reduction (core)
+  "RSGLD.ListDecoding.maxListSize_interleave_le_int"     # GGR reduction (integer form)
+  "RSGLD.ListDecoding.treeLeaves_le"                     # erase-decode tree leaf count
+  "RSGLD.ListDecoding.interleavedRS_field_size_condition_of_base_bound"      # base-RS bound => field-size condition
+  "RSGLD.ListDecoding.interleaved_field_size_condition_of_base_poly_bound"   # Muralidhara–Sen plug-in
+  "RSGLD.ListDecoding.gld_field_size_slightly_above_johnson_of_MS"           # MS slightly-above-Johnson corollary
+  "RSGLD.SmoothCosetMDS.binom_three_dependent"           # smooth-coset MDS obstruction (core)
+  "RSGLD.SmoothCosetMDS.binom_three_coeffs_nontrivial"
 )
 
 echo "== building (lake build) =="
@@ -24,7 +24,7 @@ lake build
 
 TMP="$(mktemp -d)/axcheck.lean"
 {
-  echo "import MCA"
+  echo "import RSGLD"
   for t in "${THEOREMS[@]}"; do echo "#print axioms $t"; done
 } > "$TMP"
 

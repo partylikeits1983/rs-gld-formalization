@@ -1,5 +1,5 @@
 import Mathlib
-import MCA.Code.Defs
+import RSGLD.Code.Defs
 
 /-!
 # Reed–Solomon codes
@@ -15,7 +15,7 @@ The coordinates `Fin L.card → F` are indexed by a fixed bijection `L ≃ Fin L
 (`Finset.equivFin`); the particular ordering is irrelevant to the code as a set.
 -/
 
-namespace MCA.ReedSolomon
+namespace RSGLD.ReedSolomon
 
 open Polynomial
 
@@ -31,7 +31,7 @@ noncomputable def evalMap (L : Finset F) : F[X] →ₗ[F] (Fin L.card → F) :=
 
 /-- The Reed–Solomon code `RS[F, L, k]`: evaluations of degree-`< k` polynomials.
 (Definition 2.11.) Being a `Submodule.map`, it is automatically a linear code. -/
-noncomputable def code (L : Finset F) (k : ℕ) : MCA.Code.LinearCode F L.card :=
+noncomputable def code (L : Finset F) (k : ℕ) : RSGLD.Code.LinearCode F L.card :=
   (Polynomial.degreeLT F k).map (evalMap L)
 
 /-- The encoding of a message `m : Fin k → F` (its coefficient vector): build the
@@ -50,4 +50,4 @@ theorem encode_mem_code (L : Finset F) (k : ℕ) (m : Fin k → F) :
   refine lt_of_le_of_lt (Polynomial.degree_C_mul_X_pow_le (i : ℕ) (m i)) ?_
   exact_mod_cast i.is_lt
 
-end MCA.ReedSolomon
+end RSGLD.ReedSolomon

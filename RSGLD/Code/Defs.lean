@@ -1,5 +1,5 @@
 import Mathlib
-import MCA.Code.Hamming
+import RSGLD.Code.Hamming
 
 /-!
 # Linear codes and proximity
@@ -10,7 +10,7 @@ same `deltaClose` serves both the base code (`α = F`) and interleaved codes
 (`α = Fin m → F`).
 -/
 
-namespace MCA.Code
+namespace RSGLD.Code
 
 /-- A linear code over `F` with block length `n`: a submodule of `Fin n → F`.
 (Definition 2.2.) -/
@@ -32,7 +32,7 @@ theorem deltaClose_of_mem {C : Submodule F (Fin n → α)} {δ : ℚ} {f : Fin n
 /-- `g` agrees with some codeword of `C` on every position in `S`: the
 set-restricted analogue of `deltaClose`, encoding `Δ_S(g, C) = 0` from
 Definition 4.3 (mutual correlated agreement). The shared set `S` is what
-distinguishes MCA from CA. -/
+distinguishes mutual correlated agreement from plain correlated agreement. -/
 def agreesOn (C : Submodule F (Fin n → α)) (S : Finset (Fin n)) (g : Fin n → α) : Prop :=
   ∃ c ∈ C, ∀ i ∈ S, g i = c i
 
@@ -100,17 +100,21 @@ theorem deltaClose_iff_agreesOn (hn : 0 < n) (C : Submodule F (Fin n → α)) (�
     -- (1-δ)*n ≤ S.card ⇒ hammingDist ≤ n - S.card ≤ δ*n
     nlinarith [hleQ, hcard]
 
+omit [DecidableEq α] in
 theorem agreesOn_empty (C : Submodule F (Fin n → α)) (g : Fin n → α) :
     agreesOn C ∅ g := ⟨0, C.zero_mem, by simp⟩
 
+omit [DecidableEq α] in
 theorem agreesOn_of_mem {C : Submodule F (Fin n → α)} {g : Fin n → α}
-    (hg : g ∈ C) (S : Finset (Fin n)) : agreesOn C S g := ⟨g, hg, fun i _ => rfl⟩
+    (hg : g ∈ C) (S : Finset (Fin n)) : agreesOn C S g := ⟨g, hg, fun _ _ => rfl⟩
 
+omit [DecidableEq α] in
 theorem agreesOn_subset {C : Submodule F (Fin n → α)} {S S' : Finset (Fin n)}
     {g : Fin n → α} (h : agreesOn C S g) (hsub : S' ⊆ S) : agreesOn C S' g := by
   obtain ⟨c, hc, hagree⟩ := h
   exact ⟨c, hc, fun i hi => hagree i (hsub hi)⟩
 
+omit [DecidableEq α] in
 theorem exists_maximal_commonAgree (C : Submodule F (Fin n → α)) (f₁ f₂ : Fin n → α) :
     ∃ T : Finset (Fin n),
       (agreesOn C T f₁ ∧ agreesOn C T f₂) ∧
@@ -133,4 +137,4 @@ theorem deltaClose_mono {C : Submodule F (Fin n → α)} {δ₁ δ₂ : ℚ} {g 
   obtain ⟨c, hc, hd⟩ := h
   exact ⟨c, hc, le_trans hd hδ⟩
 
-end MCA.Code
+end RSGLD.Code

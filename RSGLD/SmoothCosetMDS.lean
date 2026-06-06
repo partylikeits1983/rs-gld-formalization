@@ -3,27 +3,23 @@ import Mathlib
 /-!
 # Higher-order-MDS obstruction for smooth multiplicative cosets
 
-This file records the **core algebraic mechanism** behind the finding that
-`RS[μ_{2^s}, k]` fails higher-order MDS, `MDS(ℓ)`, for every `ℓ ≥ 3`
-(`research/smooth_coset_mds_failure.md`, `research/smooth_coset_mds3_target.md`).
+This file records the core algebraic mechanism behind the finding that `RS[μ_{2^s}, k]` fails
+higher-order MDS, `MDS(ℓ)`, for every `ℓ ≥ 3`.
 
 Setup: `L = μ_n = ⟨ω⟩`, `n = 2^s ∣ q−1`. For a 2-power `d ∣ n`, a coset `ω^t·H_d` of the
-order-`d` subgroup `H_d` has **vanishing polynomial the binomial `X^d − ω^{td}`** (because
-`∏_{ζ^d=1}(X − ω^t ζ) = X^d − ω^{td}`). All such binomials live in the **2-dimensional**
-`span{1, X^d}`. Hence any THREE of them are linearly dependent — which is exactly the failure
-of the intersection-dimension (`MDS(ℓ)`) condition that the generic/random-RS capacity proofs
-(BGM, AGGLZ) rely on. So that capacity machinery **cannot be imported** to smooth cosets.
+order-`d` subgroup `H_d` has vanishing polynomial the binomial `X^d − ω^{td}` (because
+`∏_{ζ^d=1}(X − ω^t ζ) = X^d − ω^{td}`). All such binomials live in the 2-dimensional
+`span{1, X^d}`, so any three of them are linearly dependent — exactly the failure of the
+intersection-dimension (`MDS(ℓ)`) condition that the generic/random-RS capacity proofs
+(BGM, AGGLZ) rely on. That capacity machinery therefore cannot be imported to smooth cosets.
 
-**Honesty law (project CLAUDE.md).** This is a *structural / method* obstruction, label
-`proved` (the dependence identity below) for the algebra and
-`experimentally-supported` for the `MDS(ℓ)`-failure framing. It is **NOT** a list-size
-counterexample: the associated Hamming-ball list is only `O(1/ρ)` (a constant), and the
-defect-bearing witness `w = (x^d)` sits *above* capacity — see
-`research/smooth_coset_mds_failure.md`. No claim crosses `H_q⁻¹(1−ρ)`. Lives in the
-axiom/sorry-exempt `MCA.Candidates` zone; in fact it is sorry-free and axiom-clean.
+**Scope.** This is a structural / method obstruction, not a list-size counterexample: the
+associated Hamming-ball list is only `O(1/ρ)` (a constant), and the defect-bearing witness
+`w = x^d` sits above capacity — see `research/smooth_coset_mds_failure.md`. No claim crosses
+capacity `H_q⁻¹(1−ρ)`. The dependence identity below is sorry-free and axiom-clean.
 -/
 
-namespace MCA.Candidates.SmoothCosetMDS
+namespace RSGLD.SmoothCosetMDS
 
 variable {F : Type*} [Field F]
 
@@ -58,4 +54,4 @@ theorem binom_three_coeffs_nontrivial (c : Fin 3 → F)
   · exact Or.inl (sub_ne_zero.mpr h)                      -- c₁ ≠ c₂ ⇒ c₁−c₂ ≠ 0
   · exact Or.inr (Or.inl (sub_ne_zero.mpr (Ne.symm h)))  -- c₀ ≠ c₂ ⇒ c₂−c₀ ≠ 0
 
-end MCA.Candidates.SmoothCosetMDS
+end RSGLD.SmoothCosetMDS

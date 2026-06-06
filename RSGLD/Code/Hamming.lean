@@ -14,7 +14,7 @@ Mathlib's count-level lemmas.
 This matches Definition 2.3 of Arnon–Boneh–Fenzi (2026).
 -/
 
-namespace MCA.Code
+namespace RSGLD.Code
 
 variable {α : Type*} [DecidableEq α] {n : ℕ}
 
@@ -84,4 +84,4 @@ theorem normDist_le_of_agreeOn {g c : Fin n → α} {S : Finset (Fin n)}
   gcongr
   exact_mod_cast hammingDist_le_of_agreeOn h
 
-end MCA.Code
+end RSGLD.Code

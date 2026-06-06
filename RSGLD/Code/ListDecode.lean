@@ -1,6 +1,6 @@
 import Mathlib
-import MCA.Code.Hamming
-import MCA.Code.Defs
+import RSGLD.Code.Hamming
+import RSGLD.Code.Defs
 
 /-!
 # List decoding
@@ -13,7 +13,7 @@ the `sSup` of the design sketch — this avoids order-theoretic plumbing while
 giving the same value on the finite instances we care about.
 -/
 
-namespace MCA.Code
+namespace RSGLD.Code
 
 variable {F : Type*} [Field F] {α : Type*} [AddCommGroup α] [Module F α]
   [DecidableEq α] {n : ℕ}
@@ -41,4 +41,4 @@ noncomputable def maxListSize [Fintype α] (C : Submodule F (Fin n → α))
     [Fintype C] (δ : ℚ) : ℕ :=
   Finset.univ.sup fun f : Fin n → α => (listAt C δ f).card
 
-end MCA.Code
+end RSGLD.Code

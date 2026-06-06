@@ -19,7 +19,7 @@ Pascal's rule (`Nat.choose_succ_succ`). The composition (L1′–L6) supplies a 
 leaf count) meeting these inequalities; this lemma turns them into the final bound.
 -/
 
-namespace MCA.ListDecoding
+namespace RSGLD.ListDecoding
 
 /-- **L7 (GGR Thm 3.6).** Any leaf-count function `f` obeying the Blue/Red branching recurrence is
 bounded by `Nat.choose (b+r) r · Λ^r`. `Λ` is the per-node Red fan-out (the base list size, opaque). -/
@@ -63,4 +63,4 @@ theorem treeLeaves_le (Λ : ℕ) (f : ℕ → ℕ → ℕ)
         _ = (Nat.choose (b + (r + 1)) (r + 1) + Nat.choose (b + 1 + r) r) * Λ ^ (r + 1) := by ring
         _ = Nat.choose (b + 1 + (r + 1)) (r + 1) * Λ ^ (r + 1) := by rw [hpascal]
 
-end MCA.ListDecoding
+end RSGLD.ListDecoding

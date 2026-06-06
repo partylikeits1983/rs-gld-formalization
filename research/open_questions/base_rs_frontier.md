@@ -19,7 +19,7 @@ constants**.
 
 ## The GLD-9 implication (proved in-repo)
 
-`maxListSize_interleave_le_int` (`MCA/ListDecoding/GGRComposition.lean`), m-independent:
+`maxListSize_interleave_le_int` (`RSGLD/ListDecoding/GGRComposition.lean`), m-independent:
 ```
     |Λ(C^{≡m}, η)| ≤ Nat.choose(b+r, r) · B(η)^r
 ```
@@ -29,7 +29,7 @@ folded prize is controlled by the **base** quantity `B(η)`.
 ## The prize condition
 
 The grand list-decoding prize `|Λ(C^{≡m}, δ*_C)| ≤ 2^{-128}·|F|` is **implied** (via GLD-11
-`interleavedRS_prize_of_base_bound`, axiom-clean) by a base bound `B(η) ≤ B` together with the
+`interleavedRS_field_size_condition_of_base_bound`, axiom-clean) by a base bound `B(η) ≤ B` together with the
 field-size condition
 ```
     Nat.choose(b+r, r) · B^r ≤ 2^{-128} · |F|.
@@ -45,7 +45,7 @@ asymptotically, since `2^{-128}` is a fixed constant).
   proven for a fixed 2-power coset at constant rate. BKR's structured large-list is additive
   (subspace polynomials over the full field) and at vanishing rate — inapplicable here. No smooth-
   coset / Weil-sum / FFT-structure result bounds `B(η)` in the band. Certifiable floor only:
-  `B(η) ≤ poly(n)` for `η ≤ 1−√ρ` (Guruswami–Sudan, repo `mds_list_bound`).
+  `B(η) ≤ poly(n)` for `η ≤ 1−√ρ` (Guruswami–Sudan / the classical Johnson bound).
 - **Counterexample (negative):** `research/base_rs_oracle_results.md` — the natural multiplicative
   analogue of the BKR bad word (`w = eval_L(X^d)`) gives only a **constant** band list `≤ 1/ρ` (finite
   exact evidence across `q=193,257,97`); `Ω(n)` lists occur only **below the rate** (above capacity,

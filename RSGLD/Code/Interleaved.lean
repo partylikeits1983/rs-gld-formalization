@@ -1,6 +1,6 @@
 import Mathlib
-import MCA.Code.Defs
-import MCA.Code.ListDecode
+import RSGLD.Code.Defs
+import RSGLD.Code.ListDecode
 
 /-!
 # Interleaved codes
@@ -18,7 +18,7 @@ the comaps of the column-projection linear maps, so it is a submodule for free.
   with a precise statement TODO; tracked in `Sorry.md`.
 -/
 
-namespace MCA.Code
+namespace RSGLD.Code
 
 variable {F : Type*} [Field F] {n : ℕ}
 
@@ -102,4 +102,4 @@ theorem maxListSize_interleaved_lb [Fintype F] [DecidableEq F]
     intro c₁ _ c₂ _ h
     exact liftConst_injective hm h
 
-end MCA.Code
+end RSGLD.Code

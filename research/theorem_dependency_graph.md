@@ -21,15 +21,15 @@ distance ≤ E}`, Johnson radius `1 − √ρ`, capacity `H_q⁻¹(1 − ρ)`.
             │  EraseDecode.Inv.{white,blue,red}    │   B_C(E) ≤ n^D at             │
             │  GGRComposition.Ninter_le            │   E = n − ⌈√(nk)⌉ + c         │
             ▼                                       │   (radius 1−√ρ + O(1/n))      │
-   interleaved prize condition                      └──────────────┬───────────────┘
+   interleaved field-size condition                 └──────────────┬───────────────┘
    2^128·|Λ(C^{≡m},E)| ≤ |F|                                       │
-   [interleavedRS_prize_of_base_bound]  ◄───────────── compose ────┘
+   [interleavedRS_field_size_condition_of_base_bound]  ◄─── compose ┘
             │
             ▼
-   slightly-above-Johnson GLD consequence
-   prize holds when |F| ≥ 2^128·C(b+r,r)·n^{Dr}
-   [interleaved_prize_of_base_poly_bound,
-    gld_prize_slightly_above_johnson_of_MS]
+   slightly-above-Johnson consequence
+   field-size condition holds when |F| ≥ 2^128·C(b+r,r)·n^{Dr}
+   [interleaved_field_size_condition_of_base_poly_bound,
+    gld_field_size_slightly_above_johnson_of_MS]
 ```
 
 The reduction is **`m`-independent**: interleaving does not move the frontier. The only external
@@ -60,18 +60,17 @@ BUT the list-decoding fallout is mild (route B): O(1/ρ) list, witness above cap
 
 | Result / object | Lean declaration | File |
 |---|---|---|
-| GGR interleaving reduction (core) | `MCA.ListDecoding.interleave_list_size_ggr` | `MCA/ListDecoding/InterleavedListSize.lean` |
-| GGR reduction (integer form) | `MCA.ListDecoding.maxListSize_interleave_le_int` | `MCA/ListDecoding/GGRComposition.lean` |
-| Erase-decode tree leaf count | `MCA.ListDecoding.treeLeaves_le` | `MCA/ListDecoding/TreeCount.lean` |
-| Tree invariant (white/blue/red) | `MCA.ListDecoding.Inv` (`.white/.blue/.red`) | `MCA/ListDecoding/EraseDecode.lean` |
-| Per-node intersection bound | `MCA.ListDecoding.Ninter_le` | `MCA/ListDecoding/GGRComposition.lean` |
-| base-RS bound ⇒ prize | `MCA.ListDecoding.interleavedRS_prize_of_base_bound` | `MCA/ListDecoding/BaseRSReduction.lean` |
-| Muralidhara–Sen plug-in | `MCA.ListDecoding.interleaved_prize_of_base_poly_bound` | `MCA/ListDecoding/MuralidharaSenPlugin.lean` |
-| MS slightly-above-Johnson corollary | `MCA.ListDecoding.gld_prize_slightly_above_johnson_of_MS` | `MCA/ListDecoding/MuralidharaSenPlugin.lean` |
-| Binomial dependence (MDS obstruction) | `MCA.Candidates.SmoothCosetMDS.binom_three_dependent` | `MCA/Candidates/SmoothCosetMDSFailure.lean` |
-| Nontrivial dependence coefficients | `MCA.Candidates.SmoothCosetMDS.binom_three_coeffs_nontrivial` | `MCA/Candidates/SmoothCosetMDSFailure.lean` |
-| RS is MDS (distance) | `MCA.ReedSolomon` (MDS lemmas) | `MCA/ReedSolomon/MDS.lean` |
-| Johnson list-size baseline | `MCA.Code` (Johnson bound) | `MCA/Code/JohnsonBound.lean` |
+| GGR interleaving reduction (core) | `RSGLD.ListDecoding.interleave_list_size_ggr` | `RSGLD/ListDecoding/InterleavedListSize.lean` |
+| GGR reduction (integer form) | `RSGLD.ListDecoding.maxListSize_interleave_le_int` | `RSGLD/ListDecoding/GGRComposition.lean` |
+| Erase-decode tree leaf count | `RSGLD.ListDecoding.treeLeaves_le` | `RSGLD/ListDecoding/TreeCount.lean` |
+| Tree invariant (white/blue/red) | `RSGLD.ListDecoding.Inv` (`.white/.blue/.red`) | `RSGLD/ListDecoding/EraseDecode.lean` |
+| Per-node intersection bound | `RSGLD.ListDecoding.Ninter_le` | `RSGLD/ListDecoding/GGRComposition.lean` |
+| base-RS bound ⇒ field-size condition | `RSGLD.ListDecoding.interleavedRS_field_size_condition_of_base_bound` | `RSGLD/ListDecoding/BaseRSReduction.lean` |
+| Muralidhara–Sen plug-in | `RSGLD.ListDecoding.interleaved_field_size_condition_of_base_poly_bound` | `RSGLD/ListDecoding/MuralidharaSenPlugin.lean` |
+| MS slightly-above-Johnson corollary | `RSGLD.ListDecoding.gld_field_size_slightly_above_johnson_of_MS` | `RSGLD/ListDecoding/MuralidharaSenPlugin.lean` |
+| Binomial dependence (MDS obstruction) | `RSGLD.SmoothCosetMDS.binom_three_dependent` | `RSGLD/SmoothCosetMDS.lean` |
+| Nontrivial dependence coefficients | `RSGLD.SmoothCosetMDS.binom_three_coeffs_nontrivial` | `RSGLD/SmoothCosetMDS.lean` |
+| RS is MDS (distance) | `RSGLD.ReedSolomon` (MDS lemmas) | `RSGLD/ReedSolomon/MDS.lean` |
 
 All of the above are sorry-free and depend only on `propext, Classical.choice, Quot.sound`
 (verified by `scripts/check_axioms.sh`).

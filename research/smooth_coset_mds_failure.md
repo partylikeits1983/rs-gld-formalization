@@ -7,7 +7,7 @@ But the defect converts only into an `O(1/ρ)` Hamming-ball list, and its natura
 open. Muralidhara–Sen (Fork A, `MuralidharaSenPlugin.lean`) is the separate modest positive track.
 
 Companion: `research/smooth_coset_mds3_target.md` (the ℓ=3 attack), `research/smooth_coset_genericity_literature.md`
-(why the import would need MDS(ℓ)). Lean: `MCA/Candidates/SmoothCosetMDSFailure.lean` (core
+(why the import would need MDS(ℓ)). Lean: `RSGLD/SmoothCosetMDS.lean` (core
 dependence identity, sorry-free, axiom-clean). Experiment: `experiments/list_decoding/subcoset_defect_listsize.py`.
 
 ---
@@ -48,7 +48,7 @@ whose monomial support is `{0,…,k−d−1} ∪ {d,…,k−1}` — size `2(k−
 of `{0,…,k−1}`. The generators `(X^d−c_t)X^t` lie in that same span, giving equality. ∎
 
 The **core algebraic dependence** (the engine of both (a) and (b)) is proved sorry-free in Lean,
-`MCA.Candidates.SmoothCosetMDS.binom_three_dependent`:
+`RSGLD.SmoothCosetMDS.binom_three_dependent`:
 ```
     (c₁−c₂)·(X^d − c₀) + (c₂−c₀)·(X^d − c₁) + (c₀−c₁)·(X^d − c₂) = 0,
 ```

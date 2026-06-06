@@ -6,14 +6,14 @@ interleaved prize at radius `E = n − √(nk) + c`.
 
 ## The two layers
 
-**Layer 1 — composition (DONE, axiom-clean).** `MCA/ListDecoding/MuralidharaSen.lean`,
-`gld_prize_of_MS_bound`. Import-style: takes the MS bound `maxListSize C (E/n) ≤ n^Dexp` as a
+**Layer 1 — composition (DONE, axiom-clean).** `RSGLD/ListDecoding/MuralidharaSenPlugin.lean`,
+`gld_field_size_slightly_above_johnson_of_MS`. Import-style: takes the MS bound `maxListSize C (E/n) ≤ n^Dexp` as a
 *hypothesis*, threads it through `interleave_list_le_of_base_bound` (GLD-9) + a field-size condition,
 and concludes `2^128 · maxListSize (interleave C m) (E/n) ≤ |F|`. Holds for **every** code `C`, hence
 every smooth-coset RS. `#print axioms` = `[propext, Classical.choice, Quot.sound]`.
 
 ```
-gld_prize_of_MS_bound :
+gld_field_size_slightly_above_johnson_of_MS :
   (hMS    : maxListSize C (E/n) ≤ n^Dexp)                 -- the Muralidhara–Sen input (assumed)
   (hED    : E < Dmin) (hD : Dmin ≤ minDist C · n)         -- E < min distance
   (hb     : E ≤ b·(Dmin−E)) (hr2 : Dmin ≤ 2^r·(Dmin−E))   -- GLD-9 integer budget
@@ -29,7 +29,7 @@ evaluation points (hence smooth cosets):
 - this reduces an `(n,k,t)` instance to a union over `i` of `(n−1,k−1,t−1)` instances (Lemma 2.2:
   `|Poly(n,k,t)| ≤ Σ_i |Poly(n−1,k−1,t−1)|`);
 - iterate `s = ⌈2√α/(1−√α)²⌉ + 1` times, until `t−s > √((n−s)(k−s))` lands in the **GS/Johnson** range,
-  where the list is `O(n²)` for all RS (relate to the repo's `mds_list_bound`);
+  where the list is `O(n²)` for all RS (the Guruswami–Sudan / Johnson range);
 - the iterated union gives `B_C(E) ≤ O(n^{Dexp})`, `Dexp = 2√α/(1−√α)²+3`.
 
 ## Prize consequence (the careful scope)
@@ -42,7 +42,7 @@ Johnson by the **additive** `c` only — a **relative `c/n` improvement, not con
 - ❌ vacuous in the `n≈√q` regime; exponent `Dexp` large at high rate (`ρ=1/2 ⇒ Dexp≈19`).
 
 ## Next steps
-1. **(done)** Layer-1 composition `gld_prize_of_MS_bound`, axiom-clean.
+1. **(done)** Layer-1 composition `gld_field_size_slightly_above_johnson_of_MS`, axiom-clean.
 2. **DECISION (2026-06-06): HOLD Layer 2 — cite Muralidhara–Sen externally (Tier-C baseline), like
    `[GGR11]` was before it was proven.** Reasoning: the MS reduction, while elementary in spirit
    (polynomial division + Johnson baseline), is a **multi-leaf effort comparable to the GGR composition**
